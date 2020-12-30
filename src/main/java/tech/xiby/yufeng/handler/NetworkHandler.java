@@ -11,11 +11,14 @@ import org.slf4j.LoggerFactory;
  * process the message received
  *
  * @author xiby
- * @date 2020/12/30
  */
 public class NetworkHandler extends ChannelInboundHandlerAdapter {
     private static Logger logger = LoggerFactory.getLogger(NetworkHandler.class);
 
+    @Override
+    public void channelActive(ChannelHandlerContext ctx){
+        logger.info("connection active");
+    }
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ByteBuf byteBuf = (ByteBuf) msg;
