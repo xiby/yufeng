@@ -29,9 +29,12 @@ public class NetworkService {
 
     private RcsServerConfig serverConfig;
 
+    private NetworkHandler handler;
+
     @Autowired
-    public NetworkService(RcsServerConfig config) {
+    public NetworkService(RcsServerConfig config, NetworkHandler handler) {
         serverConfig = config;
+        this.handler = handler;
     }
 
     @PostConstruct
@@ -45,7 +48,7 @@ public class NetworkService {
                 .handler(new ChannelInitializer<io.netty.channel.Channel>() {
                     @Override
                     protected void initChannel(Channel ch) {
-                        ch.pipeline().addLast(new NetworkHandler());
+                        ch.pipeline().addLast(handler);
                     }
                 });
         channel = bootstrap.connect(serverConfig.getIp(), serverConfig.getPort()).channel();
